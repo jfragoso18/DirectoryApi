@@ -1,0 +1,23 @@
+# Ignore node_modules directory
+node_modules/
+
+# Ignore generated build files
+build/
+dist/
+
+# Ignore environment variables file
+.env
+
+# Ignore log files
+*.log
+
+# Ignore operating system and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Ignore npm package lock file
+package-lock.json
+
+# Ignore Docker files and artifacts
+
