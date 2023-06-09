@@ -11,7 +11,7 @@ To get the host IP Address from the PSQL container
 
 ```
 
-```
+
 
 ### 3) Setup backend container
 Setup Container
