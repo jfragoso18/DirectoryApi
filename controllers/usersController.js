@@ -3,6 +3,9 @@
 const db = require('../models'); 
 const Contact = db.Contact;
 const User = db.User;
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+
 
 // Create a new user
 exports.createUser = async (req, res) => {
@@ -109,4 +112,44 @@ exports.getUserByIdWithContacts = async (req, res) => {
     console.error('Error retrieving user:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
+};
+
+exports.login = async (req, res) => {
+  const { username, password } = req.body;
+  
+    try {
+      // Find the user by email
+      const user = await User.findOne({ where: { username } });
+  
+      // Check if user exists and compare the password
+      if (!user || !bcrypt.compareSync(password, user.password)) {
+        return res.status(401).json({ message: 'Invalid username or password' });
+      }
+  
+
+      const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET || 'your-secret-key', {
+        expiresIn: '1h',
+      });
+    
+      res.json({ token });
+  
+    } catch (error) {
+      console.error('Error during login:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  };
+
+exports.logout = async(req,res) => {
+  // Clear the session data and destroy the session
+  req.session.destroy((error) => {
+    if (error) {
+      console.error('Error logging out:', error);
+      return res.status(500).json({ message: 'Internal server error' });
+    }
+
+    // Clear the session cookie in the response
+    res.clearCookie('session');
+
+    res.json({ message: 'Logout successful' });
+  });
 };

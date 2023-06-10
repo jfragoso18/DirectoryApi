@@ -21,7 +21,11 @@ module.exports = (sequelize, Sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-    });
+    },
+      {
+        tableName: 'users',
+      }
+    );
   
     // Before saving the user, hash the password
     User.beforeCreate(async (user) => {
