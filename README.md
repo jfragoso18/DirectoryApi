@@ -25,3 +25,10 @@ Run Container
 ```
 docker run --name contacts -d -p 3000:3000 contacts-directory
 ```
+
+### 5) Docker Backend script
+Rebuild and Re-run
+```
+chmod +x builder.sh -- JUST ONE TIME
+sh builder.sh -- To run docker for the backend 
+```
